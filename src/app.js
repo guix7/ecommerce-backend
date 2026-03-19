@@ -10,7 +10,9 @@ const app = express();
 
 app.use(helmet());
 app.use(limiter);
-app.use(mongoSanitize());
+// app.use(mongoSanitize({
+//     replaceWith: '_'
+// }));
 
 app.use(express.json());
 
