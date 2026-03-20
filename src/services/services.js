@@ -92,4 +92,48 @@ async function listProductById(id) {
   };
 }
 
-export { createProduct, listProduct, listProductById };
+async function updateProduct(id, data) {
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const erro = new Error("Id inválido");
+    erro.status = 400;
+    throw erro;
+  }
+
+  const product = await Product.findByIdAndUpdate(id, data, { new: true, runValidators: true });
+
+  if(!product){
+    const erro = new Error('Produto não encontrado');
+    erro.status = 404;
+    throw erro;
+  }
+
+  return {
+    id: product._id,
+    nome: product.nome,
+    preco: product.preco,
+    descricao: product.descricao,
+    categoria: product.categoria
+  };
+}
+
+async function deleteProduct(id){
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        const erro = new Error('Id inválido');
+        erro.status = 400;
+        throw erro;
+    }
+
+    const product = await Product.findByIdAndDelete(id);
+
+    if(!product){
+        const erro = new Error('Produto não encontrado');
+        erro.status = 404;
+        throw erro;
+    }
+
+    return {
+        message: 'Produto removido com sucesso!'
+    }
+}
+
+export { createProduct, listProduct, listProductById, updateProduct, deleteProduct};

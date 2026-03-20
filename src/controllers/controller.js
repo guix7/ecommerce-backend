@@ -1,4 +1,4 @@
-import { createProduct, listProduct, listProductById } from "../services/services.js";
+import { createProduct, listProduct, listProductById, updateProduct, deleteProduct } from "../services/services.js";
 
 async function postProducts(req, res, next){
     try{
@@ -33,4 +33,28 @@ async function getProductsById(req, res, next){
         next(error);
     }
 }
-export {postProducts, getProducts, getProductsById};
+
+async function putProducts(req, res, next){
+    try{
+        const {id} = req.params;
+        const update = await updateProduct(id, req.body);
+    
+        res.status(200).json(update);
+
+    }catch(error){
+        next(error);
+    }
+}
+
+async function removeProduct(req, res, next){
+    try{
+        const {id} = req.params;
+        const remover = await deleteProduct(id);
+
+        res.status(200).json(remover);
+
+    }catch(error){
+        next(error)
+    }
+}
+export {postProducts, getProducts, getProductsById, putProducts, removeProduct};
