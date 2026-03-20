@@ -38,8 +38,29 @@ async function createProduct(data, userId) {
   };
 }
 
-async function listProduct() {
-  const products = await Product.find();
+async function listProduct(filters) {
+  const { maxPreco, minPreco, categoria } = filters;
+
+  const query = {};
+
+  if (maxPreco || minPreco) {
+    query.preco = {};
+
+    if (maxPreco) {
+      query.preco.$lte = Number(maxPreco);
+    }
+
+    if (minPreco) {
+      query.preco.$gte = Number(minPreco);
+    }
+  }
+
+  if (categoria) {
+    query.categoria = categoria.toLowerCase();
+  }
+
+  const products = await Product.find(query);
+
   return products.map((product) => ({
     id: product._id,
     nome: product.nome,

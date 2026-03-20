@@ -14,7 +14,8 @@ async function postProducts(req, res, next){
 
 async function getProducts(req, res, next){
     try{
-        const showProduct = await listProduct();
+        const filters = req.query
+        const showProduct = await listProduct(filters);
 
         res.status(200).json(showProduct);
     }catch(error){
