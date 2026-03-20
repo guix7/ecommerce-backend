@@ -1,4 +1,4 @@
-import { createProduct } from "../services/services.js";
+import { createProduct, listProduct, listProductById } from "../services/services.js";
 
 async function postProducts(req, res, next){
     try{
@@ -12,4 +12,24 @@ async function postProducts(req, res, next){
     }
 }
 
-export {postProducts};
+async function getProducts(req, res, next){
+    try{
+        const showProduct = await listProduct();
+
+        res.status(200).json(showProduct);
+    }catch(error){
+        next(error);
+    }
+}
+
+async function getProductsById(req, res, next){
+    try{
+        const {id} = req.params;
+        const list = await listProductById(id);
+
+        res.status(200).json(list);
+    }catch(error){
+        next(error);
+    }
+}
+export {postProducts, getProducts, getProductsById};
