@@ -6,6 +6,7 @@ import helmet from 'helmet'
 import limiter from './middlewares/rate-limit.js';
 import mongoSanitize from 'express-mongo-sanitize'
 import isAdmin from './middlewares/isAdmin.js';
+import adminRouter from './routes/admin.route.js';
 
 const app = express();
 
@@ -19,8 +20,8 @@ app.use(express.json());
 
 app.use(router);
 app.use(authRouter);
+app.use(adminRouter);
 
-app.use(isAdmin)
 app.use(erroGlobal);
 
 export default app;
