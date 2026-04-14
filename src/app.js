@@ -8,8 +8,13 @@ import mongoSanitize from 'express-mongo-sanitize'
 import isAdmin from './middlewares/isAdmin.js';
 import adminRouter from './routes/admin.route.js';
 import userRoute from './routes/user.route.js';
+import cors from 'cors';
 
 const app = express();
+
+app.use(cors({
+    origin: "http://localhost:5173"
+}));
 
 app.use(helmet());
 app.use(limiter);
