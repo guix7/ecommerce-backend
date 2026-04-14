@@ -60,6 +60,24 @@ async function updatePassword(id, senhaAtual, novaSenha){
     await user.save();
 
     return {message: 'Senha atualizado com sucesso!'};
+};
+
+async function deleteMe(id){
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        const error = new Error('Id inválido');
+        error.status = 400;
+        throw error;
+    }
+
+    const user = await User.findByIdAndDelete(id);
+
+    if(!user){
+        const error = new Error('Usuário não encontrado');
+        error.status = 404;
+        throw error;
+    }
+
+    return {message: 'Usuário apagado com sucesso'};
 }
 
-export {getMeUser, updateMe, updatePassword};
+export {getMeUser, updateMe, updatePassword, deleteMe};

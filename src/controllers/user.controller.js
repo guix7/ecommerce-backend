@@ -1,5 +1,5 @@
 import userRoute from "../routes/user.route.js";
-import { getMeUser, updateMe, updatePassword } from "../services/user.service.js";
+import { getMeUser, updateMe, updatePassword, deleteMe } from "../services/user.service.js";
 
 async function getUserController(req, res, next) {
   try {
@@ -73,4 +73,19 @@ async function updatePasswordController(req, res, next) {
     }
 }
 
-export { getUserController, updateUserController, updatePasswordController};
+async function deleteUserController(req, res, next){
+    try{
+        const id = req.user.id;
+
+        const user = await deleteMe(id);
+
+        return res.status(200).json({
+            success: true,
+            data: user
+        })
+    }catch(error){
+        next(error);
+    }
+}
+
+export { getUserController, updateUserController, updatePasswordController, deleteUserController};
