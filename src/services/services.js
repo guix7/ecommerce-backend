@@ -4,12 +4,21 @@ import Product from "../models/products.js";
 async function createProduct(data, userId) {
   const { nome, descricao, preco, estoque, categoria, imagem } = data;
 
-  if (typeof preco !== 'number' || preco < 0) {
-    const erro = new Error("Preço inválido");
+
+  const precoNumber = Number(preco);
+
+  if(isNaN(precoNumber) || precoNumber < 0){
+    const erro = new Error('Preço inválido');
     erro.status = 400;
     throw erro;
   }
+  const estoqueNumber = estoque ? Number(estoque) : 0;
 
+  if(isNaN(estoqueNumber) || estoqueNumber < 0){
+    const erro = new Error('Estoque inválido');
+    erro.status = 400;
+    throw erro;
+  }
   const productExist = await Product.findOne({
     nome,
     criadoPor: userId,
@@ -24,8 +33,8 @@ async function createProduct(data, userId) {
   const product = await Product.create({
     nome: nome.trim(),
     descricao,
-    preco,
-    estoque,
+    preco: precoNumber,
+    estoque: estoqueNumber,
     categoria: categoria?.toLowerCase(),
     imagem,
     criadoPor: userId,
@@ -35,6 +44,7 @@ async function createProduct(data, userId) {
     nome: product.nome,
     preco: product.preco,
     descricao: product.descricao,
+    imagem: product.imagem,
   };
 }
 
@@ -89,6 +99,7 @@ async function listProduct(filters, user) {
       nome: product.nome,
       preco: product.preco,
       descricao: product.descricao,
+      imagem: product.imagem
     })),
   };
 }
@@ -112,6 +123,7 @@ async function byId(id) {
     nome: product.nome,
     preco: product.preco,
     descricao: product.descricao,
+    imagem: product.imagem
   };
 }
 
@@ -143,6 +155,7 @@ async function updateProduct(id, data, userId) {
     preco: product.preco,
     descricao: product.descricao,
     categoria: product.categoria,
+    imagem: product.imagem
   };
 }
 
