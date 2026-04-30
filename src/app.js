@@ -9,11 +9,15 @@ import isAdmin from './middlewares/isAdmin.js';
 import adminRouter from './routes/admin.route.js';
 import userRoute from './routes/user.route.js';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 
+app.use(cookieParser());
+
 app.use(cors({
-    origin: "http://localhost:5173"
+    origin: "http://localhost:5173",
+    credentials: true
 }));
 
 app.use(helmet());

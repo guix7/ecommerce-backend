@@ -24,6 +24,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: ['user', 'admin'],
         default: 'user'
+    },
+
+    senhaResetToken: {
+        type: String,
+        select: false
+    },
+
+    expirarSenha: {
+        type: Date,
+        select: false
     }
 
 },
