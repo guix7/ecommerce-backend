@@ -1,19 +1,11 @@
 import jwt from 'jsonwebtoken'
 
-function auth(req, res, next){
+function auth(req, res ,next){
     try{
-        const authHeader = req.headers.authorization;
+        const token = req.cookies.token;
 
-        if(!authHeader){
-            const erro = new Error("Token não fornecido");
-            erro.status = 401;
-            return next(erro);
-        }
-
-        const [scheme, token] = authHeader.split(' ');
-
-        if(scheme !== "Bearer" || !token){
-            const erro = new Error('Token mal formatado');
+        if(!token){
+            const erro = new Error("Token não fornecido ou sessão expirada");
             erro.status = 401;
             return next(erro);
         }
@@ -23,11 +15,10 @@ function auth(req, res, next){
         req.user = decoded;
 
         next();
-
     }catch(error){
         error.status = 401;
-        error.message = 'Token inválido'
-        next(error)
+        error.message = "Sessão inválida, faça login novamente";
+        next(error);
     }
 }
 
