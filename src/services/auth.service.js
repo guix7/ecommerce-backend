@@ -82,7 +82,7 @@ async function esqueceuSenha(email){
 
     await user.save();
 
-    return resetarToken;
+    return {token: resetarToken};
 }
 
 async function redefinirSenha(token, novaSenha){
