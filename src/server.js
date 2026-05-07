@@ -5,7 +5,7 @@ import connectData from './database/database.js';
 
 dns.setServers(['8.8.8.8'], ['0.0.0.0']);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 
 async function startServer(){
     await connectData();
