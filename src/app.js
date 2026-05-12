@@ -16,8 +16,7 @@ const app = express();
 app.use(cookieParser());
 
 app.use(cors({
-  origin: "*", 
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: "https://projeto-loja-online.vercel.app", 
   credentials: true
 }));
 
