@@ -54,9 +54,9 @@ async function login(data, res){
 
     res.cookie('token', token, {
         httpOnly: true, 
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'Lax',
-        maxAge: 24 * 60 * 60 * 1000 
+        secure: true,
+        sameSite: 'none',
+        maxAge: 3600000
     });
 
     return {user: {

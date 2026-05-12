@@ -17,7 +17,9 @@ app.use(cookieParser());
 
 app.use(cors({
   origin: "https://projeto-loja-online.vercel.app", 
-  credentials: true
+  credentials: true, 
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 app.use(helmet());
