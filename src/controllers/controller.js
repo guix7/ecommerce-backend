@@ -33,9 +33,8 @@ async function postProducts(req, res, next) {
 
 async function getProducts(req, res, next) {
   try {
-    const user = req.user;
     const filters = req.query;
-    const showProduct = await listProduct(filters, user);
+    const showProduct = await listProduct(filters);
 
     res.status(200).json(showProduct);
   } catch (error) {
