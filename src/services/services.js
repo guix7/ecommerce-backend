@@ -48,14 +48,11 @@ async function createProduct(data, userId) {
   };
 }
 
-async function listProduct(filters, user) {
-  const { page = 1, limit = 10, maxPreco, minPreco, categoria, nome} = filters;
+async function listProduct(filters) { 
+  const { page = 1, limit = 10, maxPreco, minPreco, categoria, nome } = filters;
 
   const query = {};
 
-  if(user.role !== 'admin'){
-    query.criadoPor = user.id;
-  }
 
   if (maxPreco || minPreco) {
     query.preco = {};
@@ -73,7 +70,7 @@ async function listProduct(filters, user) {
     query.categoria = categoria.toLowerCase();
   }
 
-  if(nome && nome.trim() !== ''){
+  if (nome && nome.trim() !== '') {
     query.nome = new RegExp(nome.trim(), 'i');
   }
 
@@ -99,7 +96,9 @@ async function listProduct(filters, user) {
       nome: product.nome,
       preco: product.preco,
       descricao: product.descricao,
-      imagem: product.imagem
+      imagem: product.imagem,
+      categoria: product.categoria, 
+      criadoPor: product.criadoPor  
     })),
   };
 }
